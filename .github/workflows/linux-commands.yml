@@ -5,10 +5,12 @@ on:
     branches:
       - main  # Trigger the workflow on a push to the 'main' branch.
   workflow_dispatch:  # Allows manual triggering of the workflow from GitHub UI.
-
+env:
+  statement: Starting to run Linux commands on self-hosted runner
+  
 jobs:
   run-linux-commands:
-    runs-on: self-hosted # Use the self-hosted runner named 'githubactionsvm'
+    runs-on: ubuntu-latetst
 
     steps:
       - name: Checkout the repository
@@ -16,11 +18,15 @@ jobs:
 
       - name: Run some Linux commands
         run: |
-          echo "Starting to run Linux commands on self-hosted runner"
+          echo "$statement with Project id: ${{ vars.PROJECT_ID }}"
+          echo "Repository Name : ${{ github.repository }}"
+          echo "Workflow Name : ${{ github.workflow }}"
+          echo "Triggered by : ${{ github.triggering_actor }}"
           uname -a  # Show system information
           df -h  # Show disk space usage
           uptime  # Show system uptime
           ls /home  # List the contents of the home directory
+          
 
       - name: Show current working directory
         run: pwd  # Print the current working directory
